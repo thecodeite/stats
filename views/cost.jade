@@ -11,7 +11,7 @@ block content
       
       function drawChart() {
         var jsonData = $.ajax({
-          url: "/data",
+          url: "/data-cost",
           dataType: "json",
           async: false
         }).responseText;
@@ -20,7 +20,6 @@ block content
 
         var data = new google.visualization.DataTable();
         data.addColumn('date', 'Date/Time');
-        data.addColumn('number', 'Updates');
         data.addColumn('number', 'Cost');
         data.addRows(json);
         
@@ -37,6 +36,5 @@ block content
         var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div'));
         chart.draw(data, {displayAnnotations: true});
       }
-  h3 Graph showing number of updates per hour
-  p There are #{count} rows
+  h3 Graph showing cumulative cost of downloading updates
   #chart_div(style="height: 600px;")
