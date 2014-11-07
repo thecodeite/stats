@@ -3,13 +3,13 @@ var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var moment = require('moment');
 
-//var mongodbUrl = "mongodb://courtsdocs:615iZrDh6Fwi50q@ds051740.mongolab.com:51740/courts_docs_stats"
-var mongodbUrl = process.env.MONGODB_URL || "mongodb://localhost:27017/CourtDocuments";
+var mongodbUrl = "mongodb://courtsdocs:615iZrDh6Fwi50q@ds051740.mongolab.com:51740/courts_docs_stats"
+//var mongodbUrl = process.env.MONGODB_URL || "mongodb://localhost:27017/CourtDocuments";
 
 /* GET home page. */
 router.get('/', function(req, res) {
 
-  MongoClient.connect(dbUrl, function(err, db) {
+  MongoClient.connect(mongodbUrl, function(err, db) {
     if(err) throw err
 
     var collection = db.collection('updates');
