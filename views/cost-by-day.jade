@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  script(src="https://www.google.com/jsapi")
+  script(src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
+  script.
+    google.load('visualization', '1', {'packages':['annotatedtimeline']});
+      google.setOnLoadCallback(drawChart);
+      
+      
+      
+      function drawChart() {
+        var jsonData = $.ajax({
+          url: "/data/cost-by-day",
+          dataType: "json",
+          async: false
+        }).responseText;
+        
+        var json = eval(jsonData);
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('date', 'Date/Time');
+        data.addColumn('number', 'Cost');
+        data.addRows(json);
+        
+        // Example data:
+        // data.addRows([
+        //   [new Date(2014, 10, 29, 11), 2],
+        //   [new Date(2014, 10, 29, 12), 3],
+        //   [new Date(2014, 10, 29, 13), 10],
+        //   [new Date(2014, 10, 29, 14), 14],
+        //   [new Date(2014, 10, 29, 15), 28],
+        //   [new Date(2014, 10, 29, 16), 28]
+        // ]);
+
+        var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div'));
+        chart.draw(data, {displayAnnotations: true});
+      }
+  h3 Graph showing cumulative cost of downloading updates
+  #chart_div(style="height: 600px;")
